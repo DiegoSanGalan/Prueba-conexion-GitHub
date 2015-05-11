@@ -1,5 +1,6 @@
 package adivinaquehace;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 
@@ -25,7 +26,7 @@ import java.util.Scanner;
  *4) EXTRA: Sólo si resolviste los puntos anteriores, implementa una versión recursiva
  *
  */
-public class AdivinaQueHace {
+public class AdivinaQueHace implements Serializable{
 	
 	
 	/**
