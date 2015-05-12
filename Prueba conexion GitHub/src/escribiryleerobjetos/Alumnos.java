@@ -89,7 +89,7 @@ public class Alumnos extends Persona2 implements Serializable
 	 * @param datos Objeto recibido por parámetro con el objeto a grabar en el fichero
 	 * @return booleano si es correcto.
 	 */
-	public boolean grabarObjeto (String nombre, Alumnos[] datos)
+	public static boolean grabarObjeto (String nombre, Alumnos[] datos)
 	{
 		boolean grabadoOk = true;
 		FileOutputStream fos = null;

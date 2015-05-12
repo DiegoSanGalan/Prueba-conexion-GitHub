@@ -24,7 +24,7 @@ public class AlumnosMain implements Serializable {
 		Alumnos [] arrayAlumnos = null;
 		Alumnos [] arrayAlumnosLeidos = null;
 		// FIN DECLARACION VARIABLES EXTRA PARA ARRAY DE OBJETOS
-		
+		boolean grabado = false;
 		
 		tamaño=arrayEnteros.length;
 		System.out.println(arrayEnteros[0]);
@@ -60,13 +60,16 @@ public class AlumnosMain implements Serializable {
 			System.out.println("Introduce la nota del alumno: ");
 			sc = new Scanner(System.in);
 			nota = sc.nextInt();
-		
 			arrayAlumnos [contador] = new Alumnos (nombre, (byte)edad, nota); 
-				// creo un objeto de Alumnos y lo meto en el arrayAlumnos
+			
 			contador ++;
 		}
 		
+		System.out.println("MOSTRAR ARRAY CREADO DESPUES DE INTRODUCIRLOS");
+		mostrarArrayAlumnos(arrayAlumnos);
 		
+		
+				// creo un objeto de Alumnos y lo meto en el arrayAlumnos
 		
 		
 		//VER TODOS LOS DATOS DESDE EL MAIN
@@ -79,8 +82,9 @@ public class AlumnosMain implements Serializable {
 		
 		//for (int i = 0; i < numeroDeAlumnos-1; i++) // para grabar el array de objetos
 		//{
-			if (arrayAlumnos.grabarObjeto (nombreArchivo, arrayAlumnos))
-				{
+		grabado	= Alumnos.grabarObjeto(nombreArchivo, arrayAlumnos);
+			if (grabado)
+			{
 				System.out.println("GRABADO CORRECTO");
 				}
 			else {
@@ -88,7 +92,7 @@ public class AlumnosMain implements Serializable {
 				}
 		//}
 		
-		
+		System.out.println("MOSTRAREMOS LOS ALUMNOS GRABADOS");
 		mostrarArrayAlumnos (arrayAlumnos);
 		
 		
