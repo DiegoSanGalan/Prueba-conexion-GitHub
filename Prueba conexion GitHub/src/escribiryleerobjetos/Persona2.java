@@ -6,6 +6,7 @@ import java.io.Serializable;
 	 * @author Diego Santamaría
 	 * CLASE PERSONA2 DONDE ALMACENAMOS Y CREAMOS LOS DATOS Y FUNCIONES DE LA PERSONA
 	 */
+	@SuppressWarnings("serial")
 	public class Persona2 implements Serializable{  //Creamos la clase Persona con los atributos:
 		static int numeroPersonas=1;	
 		static final byte MAYOR_DE_EDAD = 18; // CREAR CONSTANTE
@@ -83,13 +84,13 @@ import java.io.Serializable;
 
 	
 	/**
-	 * AL ESCRIBIR eq y pulsar CTRL + SPACE.
+	 * AL ESCRIBIR eq y pulsar CTRL + SPACE. se genera el Override de equals.
 	 */
 	@Override
 		public boolean equals(Object arg0) {
 		
 		 boolean sonIguales = false;
-		int posicion = 0;
+		//int posicion = 0;
 		
 		System.out.println("PASO POR EL OVERRIDE");
 			Persona2 compararPersona = null;

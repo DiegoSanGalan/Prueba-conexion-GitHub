@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Alumnos extends Persona2 implements Serializable
 {
 	private int nota = 0;
@@ -37,7 +38,7 @@ public class Alumnos extends Persona2 implements Serializable
 	
 	/**
 	 * GET BOTON DCHO.--> SOURCE --> GENERATE GETTERS AND SETTERS
-	 * PARA OBTENER EL VALOR
+	 * PARA OBTENER EL VALOR de nota
 	 * @return
 	 */
 	public int getNota() {
@@ -46,7 +47,7 @@ public class Alumnos extends Persona2 implements Serializable
 
 	/**
 	 * CREA LOS DOS CON BOTON DCHO. --> SOURCE --> GENERATE GETTERS AND SETTERS
-	 * PARA ASIGNAR EL VALOR
+	 * PARA ASIGNAR EL VALOR de nota
 	 * @param nota
 	 */
 	public void setNota(int nota) {
@@ -54,14 +55,14 @@ public class Alumnos extends Persona2 implements Serializable
 	}
 
 	
-	/**
+	/** Obtener la nota enumerada del alumno
 	 * @return the notaAlumnoEnumerado
 	 */
 	public NOTAS getNotaAlumnoEnumerado() {
 		return notaAlumnoEnumerado;
 	}
 
-	/**
+	/** Asignar la nota enumerada del alumno
 	 * @param notaAlumnoEnumerado the notaAlumnoEnumerado to set
 	 */
 	public void setNotaAlumnoEnumerado(NOTAS notaAlumnoEnumerado) {
@@ -69,7 +70,8 @@ public class Alumnos extends Persona2 implements Serializable
 	}
 
 	/**
-	 * toString () automático
+	 * toString () automático. 
+	 * Para crear nuestro propio método toString
 	 */
 	@Override
 	public String toString() {
@@ -84,9 +86,9 @@ public class Alumnos extends Persona2 implements Serializable
 	
 	
 	/**
-	 * Funcion para grabar un objeto en un archivo dado por parámetro
+	 * Funcion para grabar un array de objetos Alumnos en un archivo dado por parámetro
 	 * @param nombre Tipo String con el nombre del archivo
-	 * @param datos Objeto recibido por parámetro con el objeto a grabar en el fichero
+	 * @param datos Array de Objetos recibido por parámetro con el objeto a grabar en el fichero
 	 * @return booleano si es correcto.
 	 */
 	public static boolean grabarObjeto (String nombre, Alumnos[] datos)
@@ -134,7 +136,7 @@ public class Alumnos extends Persona2 implements Serializable
 	
 	
 	/**
-	 * Funcion para leer un objeto desde un archivo dado
+	 * Funcion para leer un objeto desde un archivo dado y pasarlo a un array de Objetos tipo alumno
 	 * @param nombre Tipo String
 	 * Como es por referencia el objeto modificado no hace falta que devuelva nada la funcion
 	 */
@@ -194,8 +196,6 @@ public class Alumnos extends Persona2 implements Serializable
 		e.printStackTrace();
 	}
 		return objetoAlumno;
-	
-	
 	}
 	
 	

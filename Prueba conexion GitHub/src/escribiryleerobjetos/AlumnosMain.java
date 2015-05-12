@@ -3,21 +3,28 @@ package escribiryleerobjetos;
 import java.io.Serializable;
 import java.util.Scanner;
 
-
+/**
+ * Clase principal AlumnosMain. Desde aqui crearemos objetos, los grabaremos y los leeremos
+ * 	utilizando arrays de objetos
+ * @author Diego Santamaría Galán
+ *
+ */
+@SuppressWarnings("serial")
 public class AlumnosMain implements Serializable {
 
 	/**PROGRAMA PRINCIPAL ALUMNOS
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int tamaño = 0;
 		int aux = 0; // para almacenar el contenido del array al recorrerlo el valor 
 		//int[] arrayAlumnos;
 		int [] arrayEnteros = {10, 15, 20, 37, 66, 69};
-		String [][] arrayGente = null;
+		//String [][] arrayGente = null;
 		String nombreArchivo = "alumnos.dat";
-		Alumnos b = null;
+		//Alumnos b = null;
 		// variables para leer y grabar objetos en ficheros
 		// utilizando arrays de objetos.
 		int numeroDeAlumnos = 0; // Para almacenar el nº de objetos Alumno que crearemos
@@ -40,7 +47,7 @@ public class AlumnosMain implements Serializable {
 		}
 		
 		Scanner sc = null;
-		Alumnos a = null;
+		//Alumnos a = null;
 		String nombre = null; 
 		//Persona2 p = null;
 		int edad = 0;
@@ -63,6 +70,7 @@ public class AlumnosMain implements Serializable {
 			arrayAlumnos [contador] = new Alumnos (nombre, (byte)edad, nota); 
 			
 			contador ++;
+			
 		}
 		
 		System.out.println("MOSTRAR ARRAY CREADO DESPUES DE INTRODUCIRLOS");
@@ -125,7 +133,7 @@ public class AlumnosMain implements Serializable {
 	}
 
 	/**
-	 * Método de la clase Alumnos que muestra todos los datos de un array de alumnos recibido
+	 * Función que muestra todos los datos de un array de alumnos recibido
 	 * @param alumnos Array de objetos de la clase Alumnos
 	 */
 	public static void mostrarArrayAlumnos (Alumnos []alumnos)
