@@ -1,10 +1,9 @@
 package excepcionespropias;
 
-//import java.util.Scanner;
-
 
 public class Personas {
 	
+	// Atributos de la clase Personas
 	String nombre = "";
 	int edad = 0;
 	
@@ -14,7 +13,6 @@ public class Personas {
 	 * @param Edad Tipo ing
 	 */
 	public Personas (String name, int age)
-	
 	{
 		this.nombre = name;
 		this.edad = age;
@@ -38,7 +36,6 @@ public class Personas {
 		{
 			//llenar array de objeto personas
 			listaPersonas [i] = new Personas ("Pepe" + i, 18 +i);
-			
 		}
 		
 		//generamos el error añadiendo uno mas con la funcion insertar Persona
@@ -56,13 +53,10 @@ public class Personas {
 			} catch (InsertarPersonaException e1) {
 				e1.printStackTrace();
 			}
-			
 		}finally {
 			System.out.println("Aqui pondríamos las instruciiones que queremos que se ejecuten siempre");
 		}
-		
 	}
-
 	
 	/**
 	 * Funcion para generar el error
@@ -74,7 +68,4 @@ public class Personas {
 		{
 		listaPersonas[numeroDePersonas + 1] = new Personas("Juanito" + numeroDePersonas, 33);
 		}
-		
-	
-
 }
