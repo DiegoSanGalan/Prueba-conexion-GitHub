@@ -58,7 +58,7 @@ public class Personas {
 			}
 			
 		}finally {
-			
+			System.out.println("Aqui pondríamos las instruciiones que queremos que se ejecuten siempre");
 		}
 		
 	}
@@ -70,11 +70,9 @@ public class Personas {
 	 * @param numeroDePersonas
 	 * @throws InsertarPersonaException
 	 */
-	private static void insertarPersona(Personas [] listaPersonas, int numeroDePersonas) throws ArrayIndexOutOfBoundsException{
-		
+	private static void insertarPersona(Personas [] listaPersonas, int numeroDePersonas) throws ArrayIndexOutOfBoundsException
+		{
 		listaPersonas[numeroDePersonas + 1] = new Personas("Juanito" + numeroDePersonas, 33);
-			
-			
 		}
 		
 	
