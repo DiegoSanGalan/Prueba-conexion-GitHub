@@ -142,7 +142,23 @@ public class ClaseLeeMails {
 	
 	public static void main(String[] args) throws IOException {
 		long tiempoFinal = 0;
-		long tiempoinicio = System.currentTimeMillis();
+		long tiempoinicio = System.currentTimeMillis(); // para saber tiempo ejecución
+		
+		long memoriaLibreAntes = 0;
+		long memoriaLibreMedio = 0;
+		long memoriaLibreFinal = 0;
+		
+		//de cada clase Runtime solo se puede crear un objeto o instancia a la misma
+		// porque es Static. Es un objeto creado al que podemos crear una instancia (objeto)
+		// por programa para poder usarlo. Lo que hace es llamar al objeto ya creado Runtime.getRuntime () llama
+		// al método de Runtime getRuntime
+		Runtime recolectar = Runtime.getRuntime();
+		
+		memoriaLibreAntes = recolectar.freeMemory();
+		
+		
+		//String mostrarTiempoEjecucion = "";
+		
 		String nombre = "fichero.txt";//el nombre del fichero de entrada
 		String lista_mails = null; //aquí guardaré los mails, separados por la el símbolo /
 		String [] array_mails = null; //aquí guardaer los mails, cada uno en su posición!
@@ -155,6 +171,20 @@ public class ClaseLeeMails {
 		array_mails =  hacerArrayDeMails(lista_mails);
 		ordenarMails (array_mails); // Este método es opcional, aunque luego veremos que es muy fácil de hacer!
 		mostrarMails(array_mails);
+		
+		
+		
+		System.out.println("Memoria libre al principio del programa: " + memoriaLibreAntes);
+		memoriaLibreMedio = recolectar.freeMemory();
+		System.out.println("Memoria libre antes de ejecutar GARBAGE COLLECTOR: " + memoriaLibreMedio);
+		recolectar.gc();
+		memoriaLibreFinal = recolectar.freeMemory();
+		System.out.println("Memoria DESPUES de ejecutar GARBAGE COLLECTOR: " + memoriaLibreFinal);
+		
+		System.out.println("Mi memoria liberada con Garbage es: " + (memoriaLibreFinal - memoriaLibreMedio));
+		
+		System.out.println("Diferencia de Memoria entre final y principio = "+ (memoriaLibreFinal - memoriaLibreAntes));
+		
 		tiempoFinal = System.currentTimeMillis();
 		System.out.println("Tiempo total: " + (tiempoFinal - tiempoinicio));
 	}

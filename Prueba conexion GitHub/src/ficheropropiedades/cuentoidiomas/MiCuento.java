@@ -8,9 +8,9 @@ import java.io.FileInputStream;
 //import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 //import java.security.KeyStore.LoadStoreParameter;
-import java.util.Enumeration;
+//import java.util.Enumeration;
 import java.util.Properties;
 
 public class MiCuento {
@@ -27,14 +27,13 @@ public class MiCuento {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
-		
+		//long tiempoInicial = 0;
+		long tiempoInicial = System.currentTimeMillis();
+		long tiempoFinal = 0;
 		String archivo = "";
 		//File file = null;
 		FileInputStream fis = null;
 				
-		
-		
-		
 		switch (args [0]){
 		case "ES": archivo = "story_es.properties";
 					//ponerIdioma (archivo);
@@ -60,6 +59,8 @@ public class MiCuento {
 		cargarArchivoPropiedades (fis);
 		
 		fis.close();
+		tiempoFinal = System.currentTimeMillis();
+		System.out.println("Tiempo Ejecución: " + (tiempoFinal - tiempoInicial));
 		
 		
 	}
@@ -79,11 +80,9 @@ public class MiCuento {
 	public static void cargarArchivoPropiedades (FileInputStream fis2) throws IOException {
 		
 		
-		//Enumeration<Object> valoresProperties = null;
 		File micuentotxt = null;
-		//FileInputStream fis = null;
 		Properties archivoPropiedades = null;
-		archivoPropiedades = new Properties ();
+		archivoPropiedades = new Properties (); // crear objeto tipo Properties
 		String valor1 = "";
 		String valor2 = "";
 		String valor3 = "";
