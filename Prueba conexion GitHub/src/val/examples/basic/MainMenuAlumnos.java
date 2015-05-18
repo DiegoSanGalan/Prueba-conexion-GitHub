@@ -3,6 +3,8 @@ package val.examples.basic;
 import java.util.Scanner;
 
 import val.examples.basic.exceptions.InsertarPersonaException;
+import val.examples.basic.exceptions.NotaException;
+
 
 public class MainMenuAlumnos {
 
@@ -22,35 +24,158 @@ public class MainMenuAlumnos {
 		{
 			
 			System.out.println("Elegir Opción 0 Salir");
+			System.out.println("Elegir Opción 1 Crear persona (CONSTRUCTOR)");
+			System.out.println("Elegir Opción 2 Crear Lista Personas vacia (CONSTRUCTOR)");
+			System.out.println("Elegir Opción 3 Crear Alumno (CONSTRUCTOR)");
+			System.out.println("Elegir Opción 4 Recuperar array Personas");
+			System.out.println("Elegir Opción 5 Buscar Personas (Por Nombre)");
+			System.out.println("Elegir Opción 6 Buscar Personas (Por Edad)");
+			System.out.println("Elegir Opción 7 Serializar (Grabar)");
+			System.out.println("Elegir Opción 8 Deserializar (Leer)");
+			System.out.println("Elegir Opción 9 Insertar Persona en Lista");
+			System.out.println("Elegir Opción 10 Borrar Persona de lista");
+			System.out.println("Elegir Opción 11 Mostrar Todos");
 			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-			System.out.println("Elegir Opción 0 Salir");
-				// insertar personas objeto
-		// cuando llegue a 10 las pasamos a ListaPersonas[]
-		ListaPersonas lp = null;
-		Persona person = null;
-		lp = new ListaPersonas(); //crea una lista con un array de personas. La estructura
-		person = new Persona("Pedro", 18);
+			
+			opcionMenu = sc.nextInt();
+					
+		
+		switch (opcionMenu)
+		{
+		case 0: // OPCION 0 SALIR 
+			System.out.println("Salir. Adios");
+			break;
+		case 1: // OPCION 1 CREAR PERSONA
+			System.out.println("OPCION 1 CREAR PERSONA");
+			Persona person = null;
+
+			crearPersona(person);
+			break;
+		case 2: // OPCION 2 CREAR LISTA PERSONAS VACIA
+			System.out.println("OPCION 2 CREAR LISTA PERSONAS VACÍA");
+			ListaPersonas lp = new ListaPersonas(); //crea una lista con un array de personas. La estructura
+			break;
+		case 3:  // OPCION 3 CREAR ALUMNO 
+			System.out.println("OPCION 3 CREAR ALUMNO");
+			Alumno alum = null;
+			crearAlumno (alum);
+			break;
+		case 4:  // OPCION 4 RECUPERAR ARRAY LISTA PERSONAS
+			System.out.println("OPCION 4 RECUPERAR ARRAY PERSONAS");
+			Persona [] lista = null;
+			lista = new Persona [ListaPersonas.CAPACIDAD];
+			lista = lp.getListaPersonas();
+			break;
+		case 5: // OPCION 5 BUSCAR POR NOMBRE Y MOSTRAR PERSONA
+			System.out.println("OPCION 5 BUSCAR POR NOMBRE Y MOSTRAR");
+			Persona per5 = null;
+			String name = "";
+			System.out.println("Introduce nombre a buscar: ");
+			name = sc.next();
+			per5 = lp.buscarPersona(name); 
+			System.out.println("La persona buscada es: " + per5);
+			
+			break;
+		case 6: // OPCION 6 BUSCAR POR EDAD Y MOSTRAR PERSONA
+			System.out.println("OPCION 5 BUSCAR POR EDAD Y MOSTRAR");
+			Persona per6 = null;
+			int ed = 0;
+			System.out.println("Introduce la edad a buscar: ");
+			ed = sc.nextInt();
+			per6 = lp.buscarPersona(ed);
+			System.out.println("La persona buscada es: " + per6);
+			break;
+		case 7:
+			if (lp.serializar())
+			{
+				System.out.println("Serialización correcta");
+			} else
+			{
+				System.out.println("Error en serialización");
+			}
+			break;
+		case 8:
+			if (lp.deserializar())
+			{
+				System.out.println("deserializacion correcta");
+			}
+			break;
+		case 9:
+			try {
+				lp.insertarPersona(person);
+			} catch (InsertarPersonaException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		
+		case 10:
+			break;
+			
+		case 11:
+			lp.mostrar();
+			break;
+		}
+		}
+	}
+	
+	
+	private static void crearAlumno(Alumno alum) {
+		// TODO Auto-generated method stub
+		
+		int edad = 0;
+		int nota = 0;
+		String nombre ="";
+		Scanner sc1 = new Scanner(System.in);
+		//System.out.println("Cuantas personas vamos a introducir: ");
+		//numPer = sc1.nextInt();
+		
+		//for (int i = 0; i<numPer; i++)
+		//{
+		System.out.println("Introduce el nombre: ");
+		nombre = sc1.next();
+		System.out.println("Introduce la edad: ");
+		edad = sc1.nextInt();
+		System.out.println("Introduce la nota del alumno: ");
+		nota = sc1.nextInt();
 		try {
-			lp.insertarPersona(person);
-		} catch (InsertarPersonaException e) {
+			alum = new Alumno(nombre, edad, nota);
+		} catch (NotaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
-		}
-		}
-	
+			try {
+				throw e;
+			} catch (NotaException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		
-		
-
+		}
 	}
 
+
+	/**
+	 * Crear una persona introducida por teclado.
+	 * @param per Objeto Tipo Persona
+	 */
+	private static void crearPersona(Persona per) {
+		// TODO Auto-generated method stub
+		//int numPer = 0;
+		int edad = 0;
+		String nombre ="";
+		Scanner sc1 = new Scanner(System.in);
+		//System.out.println("Cuantas personas vamos a introducir: ");
+		//numPer = sc1.nextInt();
+		
+		//for (int i = 0; i<numPer; i++)
+		//{
+		System.out.println("Introduce el nombre: ");
+		nombre = sc1.next();
+		System.out.println("Introduce la edad: ");
+		edad = sc1.nextInt();
+		per = new Persona(nombre, edad);
+		//}
+		
+		
+	}
 }

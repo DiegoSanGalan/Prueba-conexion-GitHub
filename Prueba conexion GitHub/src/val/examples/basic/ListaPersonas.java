@@ -323,6 +323,7 @@ public class ListaPersonas implements Serializable{
 				
 				array_personas[i] = array_personas[this.contPersonas];
 				eliminada = true;
+				this.contPersonas--;
 			}
 			
 		}
@@ -352,6 +353,11 @@ public class ListaPersonas implements Serializable{
 	{
 		//TODO MOSTRAR LA LISTA DE PERSONAS
 		// pista: ayudarse del método toString de persona
+		for (int i = 0; i<this.array_personas.length; i++)
+		{
+			
+			System.out.println(this.array_personas[i]);
+		}
 		
 	}
 
