@@ -1,10 +1,14 @@
 package val.examples.basic;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Properties;
 
 import val.examples.basic.exceptions.InsertarPersonaException;
 
@@ -113,7 +117,7 @@ public class ListaPersonas implements Serializable{
 		int contadorBuscarPersona = 0;
 		Persona personaBuscada = null;
 		
-		while (array_personas != null)
+		while ((array_personas != null) && (contadorBuscarPersona >= this.contPersonas))
 		{
 			if (edad == array_personas[contadorBuscarPersona].getEdad())
 			{
@@ -140,12 +144,32 @@ public class ListaPersonas implements Serializable{
 		//Hacer uso del fichero de propiedades serializa.properties, 
 		//para obtener de él el valor de la clave destino, 
 		//que representa el nombre del fichero de salida
-		String nombreArchivoGrabado = "Personas.dat"; //archivo grabacion
+		//String nombreArchivoGrabado = "Personas.dat"; //archivo grabacion
+		FileInputStream fis = null;
+		
 		FileOutputStream fos = null;
+		
 		ObjectOutputStream objOutGrabar = null;
 		boolean grabadoOk = true;
+		//Properties propiedades = null;
 		try {
-			fos = new FileOutputStream (nombreArchivoGrabado);
+			fis = new FileInputStream ("serializa.properties");
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		Properties propiedades = new Properties();
+		try {
+			propiedades.load(fis);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			fos = new FileOutputStream (propiedades.getProperty("destino"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +191,12 @@ public class ListaPersonas implements Serializable{
 			e.printStackTrace();
 		}
 		
-		finally { 
+		finally { try {
+			fis.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 			try {
 				objOutGrabar.close();
 			} catch (IOException e) {
@@ -189,19 +218,118 @@ public class ListaPersonas implements Serializable{
 	 */
 	public boolean deserializar()
 	{
-		return false;
+		boolean leido = true;
+		//File archivoLeer = null;
+		FileInputStream fis = null;
+		FileInputStream fisPropiedades = null;
+		ObjectInputStream ois = null;
+		try {
+			fisPropiedades = new FileInputStream ("serializa.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Properties propiedades = new Properties ();
+		try {
+			fisPropiedades = new FileInputStream ("serializa.properties");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			propiedades.load(fisPropiedades);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			fis = new FileInputStream(propiedades.getProperty("destino"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al leer el fichero propiedades");
+			e.printStackTrace();
+		}
+		
+		try {
+			ois = new ObjectInputStream(fis);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error al crear el objeto inputStream");
+		}
+		
+		try {
+			this.array_personas = (Persona[]) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			leido = false;
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			leido = false;
+			e.printStackTrace();
+		}
+		
+		finally {
+			try {
+				ois.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		this.getListaPersonas();
+		
+		return leido;
 	}
 	
 	public void insertarPersona (Persona p) throws InsertarPersonaException
 	{
-		
-		this.contPersonas++;
-		if (this.contPersonas > CAPACIDAD)
+		if (buscarPersona(p.getNombre())!= null) //si la persona existe
 		{
+			this.contPersonas++;
+			if (this.contPersonas > CAPACIDAD)
+			{
 			InsertarPersonaException errorArrayPersona = new InsertarPersonaException();
 			throw (errorArrayPersona);
+			}	
+		} else {
+			System.out.println("NO SE PERMITE PERSONAS REPETIDAS");
 		}
+		
 	}
+	
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public boolean eliminarPersona (Persona p)
+	{
+		boolean eliminada = false;
+		for (int i = 0; i < this.contPersonas; i++)
+		{
+			if (p.equals(array_personas[i]))
+			{
+				//eliminar objeto de la lista
+				//vamos a desplazar la última posición a la posicion eliminada
+				
+				array_personas[i] = array_personas[this.contPersonas];
+				eliminada = true;
+			}
+			
+		}
+				
+		return eliminada;
+	}
+	
 	
 	public int numeroPersonas()
 	{
@@ -224,7 +352,16 @@ public class ListaPersonas implements Serializable{
 	{
 		//TODO MOSTRAR LA LISTA DE PERSONAS
 		// pista: ayudarse del método toString de persona
-		this.toString();
+		
 	}
 
+	/**
+	 * Recibimos dos Listas de Personas y las combinamos para obtener 1
+	 * @param lista1
+	 * @param lista2
+	 */
+	public void combinarListaPersonas (ListaPersonas lista1, ListaPersonas lista2)
+	{
+		
+	}
 }
