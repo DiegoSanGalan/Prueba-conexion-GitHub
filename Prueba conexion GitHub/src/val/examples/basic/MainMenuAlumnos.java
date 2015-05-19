@@ -15,6 +15,15 @@ public class MainMenuAlumnos {
 		// TODO Auto-generated method stub
 		Scanner sc = null;
 		int opcionMenu = 0;
+		ListaPersonas lp = null;
+		Persona person = null;
+		Persona [] lista = null;
+		Alumno alum = null;
+		Persona per5 = null;
+		String name = "";
+		Persona per6 = null;
+		int ed = 0;
+
 		sc = new Scanner (System.in);
 		
 		opcionMenu = sc.nextInt();
@@ -47,29 +56,27 @@ public class MainMenuAlumnos {
 			break;
 		case 1: // OPCION 1 CREAR PERSONA
 			System.out.println("OPCION 1 CREAR PERSONA");
-			Persona person = null;
-
+			
 			crearPersona(person);
 			break;
 		case 2: // OPCION 2 CREAR LISTA PERSONAS VACIA
 			System.out.println("OPCION 2 CREAR LISTA PERSONAS VACÍA");
-			ListaPersonas lp = new ListaPersonas(); //crea una lista con un array de personas. La estructura
+			 lp = new ListaPersonas(); //crea una lista con un array de personas. La estructura
 			break;
 		case 3:  // OPCION 3 CREAR ALUMNO 
 			System.out.println("OPCION 3 CREAR ALUMNO");
-			Alumno alum = null;
+			
 			crearAlumno (alum);
 			break;
 		case 4:  // OPCION 4 RECUPERAR ARRAY LISTA PERSONAS
 			System.out.println("OPCION 4 RECUPERAR ARRAY PERSONAS");
-			Persona [] lista = null;
+			
 			lista = new Persona [ListaPersonas.CAPACIDAD];
 			lista = lp.getListaPersonas();
 			break;
 		case 5: // OPCION 5 BUSCAR POR NOMBRE Y MOSTRAR PERSONA
 			System.out.println("OPCION 5 BUSCAR POR NOMBRE Y MOSTRAR");
-			Persona per5 = null;
-			String name = "";
+			
 			System.out.println("Introduce nombre a buscar: ");
 			name = sc.next();
 			per5 = lp.buscarPersona(name); 
@@ -77,15 +84,15 @@ public class MainMenuAlumnos {
 			
 			break;
 		case 6: // OPCION 6 BUSCAR POR EDAD Y MOSTRAR PERSONA
-			System.out.println("OPCION 5 BUSCAR POR EDAD Y MOSTRAR");
-			Persona per6 = null;
-			int ed = 0;
+			System.out.println("OPCION 6 BUSCAR POR EDAD Y MOSTRAR");
+			
 			System.out.println("Introduce la edad a buscar: ");
 			ed = sc.nextInt();
 			per6 = lp.buscarPersona(ed);
 			System.out.println("La persona buscada es: " + per6);
 			break;
-		case 7:
+		case 7: // OPCION 7 SERIALIZAR (GRABAR EN UN FICHERO LA LISTA
+			System.out.println("OPCIÓN 7 SERIALIZAR. (GRABAR)");
 			if (lp.serializar())
 			{
 				System.out.println("Serialización correcta");
@@ -94,13 +101,18 @@ public class MainMenuAlumnos {
 				System.out.println("Error en serialización");
 			}
 			break;
-		case 8:
+		case 8: // OPCIÓN 8 DESERIALIZAR (LEER DE UN FICHERO LA LISTA)
+			System.out.println("OPCIÓN 8 DESERIALIZAR (LEER)");
 			if (lp.deserializar())
 			{
 				System.out.println("deserializacion correcta");
 			}
+			else {
+				System.out.println("Error al deserializar (Leer)");
+			}
 			break;
-		case 9:
+		case 9: // OPCIÓN 9 INSERTAR PERSONA EN LA LISTA
+			System.out.println("OPCIÓN 9 INSERTAR PERSONA EN LA LISTA");
 			try {
 				lp.insertarPersona(person);
 			} catch (InsertarPersonaException e) {
@@ -109,10 +121,24 @@ public class MainMenuAlumnos {
 			}
 			break;
 		
-		case 10:
+		case 10: // OPCIÓN 10 BORRAR PERSONA DE LA LISTA
+			System.out.println("OPCIÓN 10 BORRAR PERSONA DE LA LISTA");
+			System.out.println("Indicar nombre de la persona a borrar: ");
+			name=sc.next();
+			person = lp.buscarPersona(name);
+			if (lp.eliminarPersona(person))
+			{
+				System.out.println("Borrado correcto: " + person);
+			}
+			else 
+			{
+				System.out.println("no se ha podido borrar: " + person);
+			}
+			
 			break;
 			
-		case 11:
+		case 11: // OPCIÓN 11 MOSTRAR LISTA PERSONAS
+			System.out.println("OPCIÓN 11 MOSTRAR LA LISTA COMPLETA");
 			lp.mostrar();
 			break;
 		}
@@ -151,6 +177,7 @@ public class MainMenuAlumnos {
 			}
 		
 		}
+		sc1.close();
 	}
 
 

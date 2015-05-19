@@ -1,12 +1,14 @@
 package arraylist;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 import val.examples.basic.Persona;
 
-public class MainArrayList {
+public class MainArrayList 	 {
 
-	/**
+	/** Prueba con ArrayList añadiendo y borrando objetos en el array list
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -28,25 +30,30 @@ public class MainArrayList {
 		
 		for (Persona pn : miArrayList)
 		{
-			System.out.println(pn);
+			//System.out.println(pn);
 		}
 		miArrayList.remove(p);
 		
 		for (Persona pn : miArrayList)
 		{
-			System.out.println(pn);
+			//System.out.println(pn);
 		}
 		miArrayList.remove(p2);
 		
 		for (Persona pn : miArrayList)
 		{
-			System.out.println(pn);
+			//System.out.println(pn);
+		}
+		
+		// Nos creamos un objeto Iterator utilizando el método iterator de la clase ArrayList
+		// para luego con éste objeto poder recorrer la lista.
+		Iterator <Persona> iteradorPersona = miArrayList.iterator();
+		while (iteradorPersona.hasNext())
+		{
+			p2 = iteradorPersona.next();
+		System.out.println(p2);
 		}
 		
 		
-		
-		
-		
+	}	
 	}
-
-}
