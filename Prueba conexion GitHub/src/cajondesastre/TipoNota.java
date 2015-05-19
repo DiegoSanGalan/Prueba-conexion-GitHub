@@ -2,7 +2,7 @@ package cajondesastre;
 
 import val.examples.basic.exceptions.NotaException;
 
-public enum TipoNota {SOBRESALIENTE, NOTABLE, BIEN, APROBADO, SUSPENSO;
+public enum TipoNota {SUSPENSO, APROBADO, BIEN, NOTABLE, SOBRESALIENTE;
 
 	public static TipoNota traduceNota (int nota) throws NotaException
 	{
