@@ -6,9 +6,17 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
+/**
+ * Para ordenar la clase Persona por Nombre
+ * @author Diego Santamaría Galán
+ *
+ */
 public class OrdenarPorNombre implements Comparator {
 
 	@Override
+	/**
+	 * Método de la clase OrdenarPorNombre que utiliza el compare
+	 */
 	public int compare(Object arg0, Object arg1) {
 		int comparador = 0;
 		Persona p1 = null;
@@ -16,6 +24,7 @@ public class OrdenarPorNombre implements Comparator {
 		p1 = (Persona) arg0;
 		p2 = (Persona) arg1;
 		
+		//utilizamos el metodo compareTo de la clase String
 		comparador = p1.getNombre().compareTo(p2.getNombre());
 		
 		

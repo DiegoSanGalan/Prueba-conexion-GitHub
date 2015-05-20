@@ -29,7 +29,7 @@ public class MapasMain {
 		Persona p1 = new Persona ("Paco", 15);
 		Persona p2 = new Persona ("Andres", 25);
 		Persona p3 = new Persona ("Paco", 15);
-		Persona p4 = new Persona ("Andres", 25);
+		Persona p4 = new Persona ("Federico", 12);
 		
 		// Creo objetos Alumno
 		Alumno a1 = new Alumno ("Diego", 25, 3);
@@ -193,12 +193,90 @@ public class MapasMain {
 		mostrarArray (l);
 		
 		
+		/**
+		 * USO DE HASHMAP
+		 */
+		// declarar un mapa tipo HashMap utilizamos SUPERTIPO MAP al crearlo.
+		Map <String, Persona> miMapaPersonasHas = new HashMap <String, Persona>();
+		
+		//Iterator <Iterator>contadorLista = new Iterator (l.iterator<Iterator>());
+		// añado un objeto al mapa indicando la clave
+		// .put (Clave, Valor);
+		miMapaPersonasHas.put(p.getNombre(), p);
+		// añado otro objeto al mapa
+		miMapaPersonasHas.put(p1.getNombre(), p1);
+		// añado otro objeto al mapa
+		miMapaPersonasHas.put (p2.getNombre(), p2);
+		// añado otro objeto al mapa
+		miMapaPersonasHas.put(p3.getNombre(), p3);
+		
+		miMapaPersonasHas.put(p4.getNombre(), p4);
 		
 		
+		// muestro el contenido del mapa
+		System.out.println("MOSTRAR MAPA TIPO HASHMAP");
+		System.out.println(miMapaPersonasHas);
+		
+		// añado otro objeto con la clave repetida
+		//   al estar repetida la clave sustituye el objeto nuevo por el antiguo.
+		//System.out.println("AL AÑADIR UN OBJETO CON UNA CLAVE QUE YA ESTÁ LO SUSTITUYE:");
+		
+		//System.out.println(miMapaPersonasHas);
+		System.out.println(miMapaPersonasHas.get(p3.getNombre()));// me devuelve el objeto
+		//miMapaPersonas.clear(); // vacia el contenido del mapa
+		System.out.println(miMapaPersonasHas);
+		//miMapaPersonas.entrySet(<Integer, Persona>);
+		System.out.println(miMapaPersonasHas.containsValue(p3)); //devuelve true si existe.
+		//System.out.println("ELIMINAR OBJETO");
+		//miMapaPersonasHas.remove(p2.getNombre());
+		//System.out.println(miMapaPersonasHas);
+		//miLinkedHasMap
+		
+		System.out.println("ORDENAR EL MAPA HASHMAP");
+		miMapaPersonasHas = ordenarMiHashMap (miMapaPersonasHas);
+		
+		System.out.println("MOSTRAR EL DEVUELTO");
+		System.out.println(miMapaPersonasHas);
 		
 	}
 	
 	
+	private static Map<String, Persona> ordenarMiHashMap(
+			Map<String, Persona> miMapaPersonasHasDesordenado) {
+		// TODO Auto-generated method stub
+		Map <String, Persona> miMapaPersonaHasOrdenado = new LinkedHashMap <String, Persona> ();
+		int ordenar = 0;
+		
+		// para ordenarlo
+		Map <String, Persona> treeordenar = new TreeMap <String, Persona>(); 
+		
+		System.out.println("MUESTRO COMO SE RECIBE");
+		System.out.println(miMapaPersonasHasDesordenado);
+		//treeordenar = (Map<String, Persona>) miMapaPersonasHasDesordenado.values();
+		
+		treeordenar.putAll(miMapaPersonasHasDesordenado);
+		
+		System.out.println("MUESTRO EL TREE");
+		System.out.println(treeordenar);
+		//miMapaPersonaHasOrdenado = (HashMap) miMapaPersonasHasDesordenado;
+		
+		
+		//System.out.println(mimapa);
+		
+		//System.out.println("DESORDENADO");
+		//System.out.println(miMapaPersonasHasDesordenado);
+		
+		
+		
+		
+		//System.out.println("ORDENADO");
+		//System.out.println(miMapaPersonaHasOrdenado);
+		miMapaPersonaHasOrdenado = treeordenar;
+		
+		return miMapaPersonaHasOrdenado;
+	}
+
+
 	private static void mostrarArray(List<Persona> l) {
 		// TODO Auto-generated method stub
 		//Iterator iteradorListaPersona = null;
