@@ -3,16 +3,21 @@ package utilizarclaseiterable;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+//import cajondesastre.Persona;
+
 public class RecorerPersonas implements Iterator{
 	
 	
 	/**
 	 * Constructor clase RecorerPersonas
-	 * @param lista
+	 * @param array_personas
 	 */
-	public RecorerPersonas (ListaPersonas lista)
+	public RecorerPersonas (utilizarclaseiterable.Persona[] array_personas)
 	{
-		
+		for (Persona i: array_personas)
+		{
+			System.out.println(" |+| Nombre: " + i.getNombre() + "  |+| Edad: " + i.getEdad());
+		}
 	}
 
 	@Override

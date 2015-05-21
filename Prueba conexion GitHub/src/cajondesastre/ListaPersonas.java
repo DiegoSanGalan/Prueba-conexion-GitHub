@@ -384,7 +384,7 @@ public class ListaPersonas implements Serializable, Iterable{
 	public Iterator iterator() {
 		// TODO Auto-generated method stub
 		RecorerPersonas iteradorRecorrer = null;
-		iteradorRecorrer = new RecorerPersonas(array_personas.);
+		iteradorRecorrer = new RecorerPersonas(array_personas);
 		
 		return iteradorRecorrer;
 	}

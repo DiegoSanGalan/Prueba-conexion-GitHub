@@ -10,8 +10,14 @@ public class RecorerPersonas implements Iterator{
 	 * Constructor clase RecorerPersonas
 	 * @param lista
 	 */
-	public RecorerPersonas (ListaPersonas lista)
+	public RecorerPersonas (Persona[] lista)
 	{
+		//lista.iterator();
+		for (Persona i: lista)
+		{
+			System.out.println(" + Nombre: " + i.getNombre() + " Edad: " + i.getEdad());
+		}
+		
 		
 	}
 

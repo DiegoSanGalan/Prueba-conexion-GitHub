@@ -256,6 +256,8 @@ public class MapasMain {
 		
 		treeordenar.putAll(miMapaPersonasHasDesordenado);
 		
+		//treeordenar.
+		
 		System.out.println("MUESTRO EL TREE");
 		System.out.println(treeordenar);
 		//miMapaPersonaHasOrdenado = (HashMap) miMapaPersonasHasDesordenado;
@@ -283,7 +285,7 @@ public class MapasMain {
 		//iteradorListaPersona = l.iterator();
 		for (Persona i : l)
 		{
-			System.out.println(" - " + i  );
+			System.out.println("® - " + i  );
 		}
 	}
 
