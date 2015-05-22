@@ -71,7 +71,7 @@ public class LibroXML extends DefaultHandler{
 	public void endDocument() throws SAXException {
 		// TODO Auto-generated method stub
 		// muestro el mapa de libros cuando termina de leer el documento
-		System.out.println(mapaLibros);
+		System.out.println(mapaLibros.values());
 		super.endDocument();
 	}
 

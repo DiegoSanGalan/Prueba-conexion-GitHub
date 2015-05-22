@@ -59,7 +59,9 @@ public class Libro {
 	      sb.append("\nTítulo: "+titulo);  
 	      sb.append("\nAutor: "+autor);  
 	      sb.append("\nAño: "+anyo);  
-	      sb.append("\nEditorial: "+editorial);  
+	      sb.append("\nEditorial: "+editorial); 
+	      sb.append("\n-----------------------");
+	      sb.append("\n-----------------------");
 	        
 	      return sb.toString();  
 	   }  
