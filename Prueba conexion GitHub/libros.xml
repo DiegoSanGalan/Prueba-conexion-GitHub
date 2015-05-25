@@ -18,11 +18,12 @@
          <anyo>2005</anyo>  
          <editorial>Ediciones SM</editorial>  
       </libro>  
-      <libro isbn="978-84-8346-808-1">  
-         <titulo>Next</titulo>  
-         <autor>Michael Crichton</autor>  
-         <anyo>2008</anyo>  
+      <libro isbn="97-84-26815-808-1">  
+         <titulo>La pirámide inmortal</titulo>  
+         <autor>Javier Sierra</autor>  
+         <anyo>2013</anyo>  
          <editorial>DeBolsillo</editorial>  
       </libro>  
+      
     
 </libros> 

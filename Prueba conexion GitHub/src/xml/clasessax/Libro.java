@@ -1,5 +1,7 @@
 package xml.clasessax;
 
+import java.awt.Font;
+
 public class Libro {
 	   private String isbn;  
 	   private String titulo;  
@@ -53,16 +55,18 @@ public class Libro {
 	   }  
 	  
 	   @Override  
-	   public String toString() {  
+	   public String toString() { 
 	      StringBuilder sb = new StringBuilder(); //tipo de String más rápido en añadir! 
-	      sb.append("\nISBN: "+isbn);  
-	      sb.append("\nTítulo: "+titulo);  
-	      sb.append("\nAutor: "+autor);  
-	      sb.append("\nAño: "+anyo);  
-	      sb.append("\nEditorial: "+editorial); 
-	      sb.append("\n-----------------------");
-	      sb.append("\n-----------------------");
-	        
+	      sb.append("\n + ISBN: " +isbn);  
+	      sb.append("\n  - Título: " +titulo);  
+	      sb.append("\n  - Autor: " +autor);  
+	      sb.append("\n  - Año: " +anyo);  
+	      sb.append("\n  - Editorial: " +editorial); 
+	      sb.append("\n*********************************************");
+	      sb.append("\n*********************************************");
+	      
+	      //System.out.println(sb);
+	      
 	      return sb.toString();  
 	   }  
 	     

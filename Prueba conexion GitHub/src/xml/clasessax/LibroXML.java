@@ -10,9 +10,9 @@ public class LibroXML extends DefaultHandler{
 	 private String valor = "";  
      
 	   private Libro libro;  
-	   
+	   //MiHashMap mapaLibros = null;
 	   // Creo atributo de clase con el HashMap
-	   public Map <String, Libro> mapaLibros = new HashMap <String, Libro> ();
+	   public Map <String, Libro> mapaLibros = new MiHashMap();
 	   
 	   public LibroXML(Libro libro){  
 	      this.libro=libro;  
@@ -28,8 +28,14 @@ public class LibroXML extends DefaultHandler{
 	      // Si la etiqueta es libro leemos el atributo isbn  
 	      if(localName.equals("libro")){  
 	    	 libro = new Libro (); // inicializo el objeto libro para que cree nueva referencia de objeto
-	         String isbn = attributes.getValue("isbn");
+	    	 		// Al hacer ésto creamos un nuevo objeto que aunque tiene el mismo nombre de variable
+	    	 		// referencia a una nueva posición de memoria.
+	    	 		// el objeto inicial no se pierde porque hemos almacenado la dirección de memoria
+	    	 		// en el HashMap
+	    	 String isbn = attributes.getValue("isbn");
 	         // Lo guardamos en el objeto libro  
+	    	   // con el String no es necesario porque el objeto String cada vez que se modifica
+	    	 	// el contenido cambia a una nueva referencia de memoria.
 	         libro.setIsbn(isbn);  
 	      }  
 	   }  
@@ -47,7 +53,6 @@ public class LibroXML extends DefaultHandler{
 	         throws SAXException {  
 	      // Según la etiqueta guardamos el valor leido   
 	      // en una propiedad del objeto libro  
-		  // System.out.println(name);
 		   
 		  if (localName.equals("titulo")){  
 	         libro.setTitulo(valor);  
@@ -57,10 +62,19 @@ public class LibroXML extends DefaultHandler{
 	         libro.setAnyo(valor);  
 	      }else if (localName.equals("editorial")){  
 	         libro.setEditorial(valor); 
-	         
-	         // añado libro al HashMap
-	         mapaLibros.put(libro.getIsbn(), libro); 
 	      }  
+	         else if (localName.equals("libro")) {
+	        	 // En el momento que encuentre una nueva etiqueta libro con el fin </libro>
+	        	 // añado libro al HashMap
+	        	 mapaLibros.put(libro.getIsbn(), libro);
+	        	 
+	        	 // Si queremos que al imprimir el listado con los libros no nos muestre los caracteres
+	        	 // específicos del HashMap con las separaciónes tenemos que hacer un "truco"
+	        	 // es decir cada vez que llenamos un libro con todos los datos mostramos ése libro
+	        	 		//System.out.println(libro.toString());
+	         }
+	          
+	        
 	      
 	   }
 
@@ -69,9 +83,14 @@ public class LibroXML extends DefaultHandler{
 	 */
 	@Override
 	public void endDocument() throws SAXException {
+		
+		
 		// TODO Auto-generated method stub
 		// muestro el mapa de libros cuando termina de leer el documento
-		System.out.println(mapaLibros.values());
+		// Al imprimir va a usar el toString que tenemos en Libro con el formato de texto que le pongamos
+		// pero muestra los caracteres separadores de elementos del HashMap
+		
+		System.out.println(mapaLibros.toString());
 		super.endDocument();
 	}
 
