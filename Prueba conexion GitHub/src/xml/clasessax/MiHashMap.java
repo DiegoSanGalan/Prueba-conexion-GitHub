@@ -25,6 +25,9 @@ public class MiHashMap extends HashMap<String, Libro> {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	/**
+	 * toString de mi propia clase MiHashMap
+	 */
 	@Override
 	public String toString() {
 		
