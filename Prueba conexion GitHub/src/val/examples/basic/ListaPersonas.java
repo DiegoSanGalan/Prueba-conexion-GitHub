@@ -80,25 +80,26 @@ public class ListaPersonas implements Serializable{
 		boolean encontrado = false;
 		//int contadorBuscarPersona = 0;
 		Persona personaBuscada = null;
+		int posicion = 0;
 		
-		//while ((this.array_personas!=null) && (this.contPersonas!=0))
-		for (int i = 0; i<this.contPersonas; i++)
+		if (numeroPersonas()>0)
 		{
-			if (nombre.equals(this.array_personas[i].getNombre()))
+			while (!encontrado && posicion < numeroPersonas())
+				//for (int i = 0; i<this.contPersonas; i++)
 			{
-				personaBuscada = this.array_personas[i];
+				if (this.array_personas[posicion].getNombre().equals((nombre)))
+				{
+				personaBuscada = this.array_personas[posicion];
 				encontrado = true;
+				}
+				posicion++;
 			}
-			else
-			{
 				
-			}
+		}
 			
-		}
-		if (!encontrado)
-		{
-			personaBuscada = null;
-		}
+		
+		
+		
 		
 		return personaBuscada;
 	}
@@ -292,7 +293,35 @@ public class ListaPersonas implements Serializable{
 	
 	public void insertarPersona (Persona p) throws InsertarPersonaException
 	{
-		if (buscarPersona(p.getNombre())!= null) //si la persona existe
+		
+		//no se puede insertar una persona si es igual
+		if (!estaLlena()){//si tengo espacio para insertar	
+			if(numeroPersonas()!=0){
+				if(buscarPersona(p.getNombre())== null) {
+					//System.out.println("num de per "+numeroPersonas() );
+					array_personas[numeroPersonas()]=p;
+				
+				}else{
+					System.out.println("Ya existe esa persona");
+					//log.debug("Ya existe esa persona");
+				}
+			}else{
+				array_personas[numeroPersonas()] = p;
+			}
+		}else{
+			System.out.println("Capacidad limite alcanzada!!!");
+			//log.error("Numero de personas excecido. Máximo");
+			throw new InsertarPersonaException();
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		/*if (buscarPersona(p.getNombre())!= null) //si la persona existe
 		{
 			this.contPersonas++;
 			if (this.contPersonas > CAPACIDAD)
@@ -302,7 +331,11 @@ public class ListaPersonas implements Serializable{
 			}	
 		} else {
 			System.out.println("NO SE PERMITE PERSONAS REPETIDAS");
-		}
+		}	
+			*/
+			
+			
+		
 		
 	}
 	

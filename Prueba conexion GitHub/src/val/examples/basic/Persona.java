@@ -17,6 +17,9 @@ public class Persona implements Serializable {
 		this.nombre = nombre;
 		
 	}
+	public Persona (){
+		//persona vacia
+	}
 
 
 	public int getEdad() {
