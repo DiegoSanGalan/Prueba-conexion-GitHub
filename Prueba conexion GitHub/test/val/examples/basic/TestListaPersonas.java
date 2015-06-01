@@ -3,10 +3,11 @@ package val.examples.basic;
 import static org.junit.Assert.*;
 
 import org.hamcrest.core.IsEqual;
-import org.junit.After;
+//import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+//import org.junit.BeforeClass;
 import org.junit.Test;
 import org.hamcrest.core.IsEqual;
 
@@ -14,14 +15,19 @@ import val.examples.basic.exceptions.InsertarPersonaException;
 
 public class TestListaPersonas {
 	
-	static ListaPersonas listaP = new ListaPersonas(); // creo un objeto listapersonas vacio
-	static Persona p = new Persona ("Diego", 40);
-	static Persona p2 = new Persona ("Pedro", 18);
+	ListaPersonas listaP = null; // creo un objeto listapersonas vacio
+	Persona p = null;
+	Persona p2 = null;
 	
-	@BeforeClass
-	public static void iniciarTestListaPersonas () 
+	@Before
+	public void iniciarTestListaPersonas () 
 	{
-		//listaP = new ListaPersonas();
+		
+		
+		this.listaP = new ListaPersonas();
+		this.p = new Persona ("Diego", 40);
+		this.p2 = new Persona ("Pedro", 18);
+		
 		
 		try {
 			listaP.insertarPersona(p);
@@ -35,31 +41,15 @@ public class TestListaPersonas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Persona p = new Persona("Diego",40);
-		//Persona p2 = new Persona ("Andres",36);
-		//listaP.insertarPersona(p);
 	}
 	
-	/*
-	/**
-	 * Pasa cada prueba que hace test por aqui.
-	
-	@Before
-	static void reniciarVariables()
-	{
-	listaP = new ListaPersonas();
-	//p = null;
-	//p2 = null;
-	
-	}
-	*/
 	
 	
 	@Test
 	public void testListaPersonas() {
 		
-		ListaPersonas lp = new ListaPersonas();
-		Persona [] array = lp.getListaPersonas();
+		//ListaPersonas lp = new ListaPersonas();
+		/*Persona [] array = listaP.getListaPersonas();
 		for (Persona p : array)
 		{
 			
@@ -69,40 +59,32 @@ public class TestListaPersonas {
 		// pruebo que la lista no esté a null
 		//System.out.println(listaP.getListaPersonas());
 		//assertNull("Lista Personas no se ha creado valor = null" , listaP.getListaPersonas());
+		*/
 		
+		assertNull ("Lista vacia" , listaP.getListaPersonas());
 	}
 	
 
 	@Test
 	public void testBuscarPersonaString() {
 		
-		
-		//listaP.mostrar();
 		assertTrue("Persona no encontrada ", p.equals(listaP.buscarPersona("Diego")));
-		//assertTrue("No son iguales las personas ",p==listaP.buscarPersona("Diego"));
 		
 	}
 
 	@Test
 	public void testBuscarPersonaInt() {
-		//listaP = new ListaPersonas();
-		//Persona p = null;
-		//p = new Persona("Diego",40);
-		//Persona p2 = new Persona ("Andres",36);
 		
-		assertTrue("Persona encontrada ", p.equals(listaP.buscarPersona(40)));
+		assertTrue("Persona no encontrada ", p.equals(listaP.buscarPersona(40)));
 		
-		
-		
+		//assertThat (p, IsEqual.equalTo(listaP.buscarPersona("Diego")));
 		
 	}
 
 	@Test
 	public void testInsertarPersona() {
 		
-		
 		assertNull("El objeto persona no se ha añadido a lista personas ", listaP);
-		
 		
 	}
 

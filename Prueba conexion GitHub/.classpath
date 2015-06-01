@@ -10,5 +10,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/CURSO 703/JAVA/DiegoSG/ARCHIVOS IMPORTANTES AYUDAS/BASES DE DATOS/ojdbc14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

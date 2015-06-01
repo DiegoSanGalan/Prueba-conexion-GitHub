@@ -82,8 +82,8 @@ public class ListaPersonas implements Serializable{
 		Persona personaBuscada = null;
 		int posicion = 0;
 		
-		if (numeroPersonas()>0)
-		{
+		//if (numeroPersonas()>0)
+		//{
 			while (!encontrado && posicion < numeroPersonas())
 				//for (int i = 0; i<this.contPersonas; i++)
 			{
@@ -95,7 +95,7 @@ public class ListaPersonas implements Serializable{
 				posicion++;
 			}
 				
-		}
+		//}
 			
 		
 		
@@ -375,10 +375,14 @@ public class ListaPersonas implements Serializable{
 	public boolean estaLlena()
 	{
 		boolean llena = false;
-		if (this.contPersonas == CAPACIDAD)
+		if (array_personas !=null)
 		{
-			llena = true;
+			if (this.contPersonas == CAPACIDAD)
+			{
+				llena = true;
+			}	
 		}
+		
 		return llena;
 	}
 	

@@ -26,10 +26,11 @@ public class MainMenuAlumnos {
 
 		sc = new Scanner (System.in);
 		
-		opcionMenu = sc.nextInt();
-		System.out.println("Elegir Opción 0 Salir");
+		
+		//System.out.println("Elegir Opción 0 Salir");
+		//opcionMenu = sc.nextInt();
 		//MENU PRUEBAS
-		while (opcionMenu!=0)
+		do 
 		{
 			
 			System.out.println("Elegir Opción 0 Salir");
@@ -44,6 +45,7 @@ public class MainMenuAlumnos {
 			System.out.println("Elegir Opción 9 Insertar Persona en Lista");
 			System.out.println("Elegir Opción 10 Borrar Persona de lista");
 			System.out.println("Elegir Opción 11 Mostrar Todos");
+			System.out.println("Elegir Opción 12 ¿Está llena la lista?");
 			System.out.println("Elegir Opción 0 Salir");
 			
 			opcionMenu = sc.nextInt();
@@ -141,11 +143,20 @@ public class MainMenuAlumnos {
 			System.out.println("OPCIÓN 11 MOSTRAR LA LISTA COMPLETA");
 			lp.mostrar();
 			break;
+		
+		case 12: System.out.println("¿Está llena la lista?");
+			if (lp.estaLlena())
+			{
+				System.out.println("La lista está llena");
+			}
+		
 		}
-		}
+		}while (opcionMenu!=0);
+		sc.close();
 	}
 	
 	
+	@SuppressWarnings("resource")
 	private static void crearAlumno(Alumno alum) {
 		// TODO Auto-generated method stub
 		
@@ -202,7 +213,7 @@ public class MainMenuAlumnos {
 		edad = sc1.nextInt();
 		per = new Persona(nombre, edad);
 		//}
-		
+		sc1.close();
 		
 	}
 }
