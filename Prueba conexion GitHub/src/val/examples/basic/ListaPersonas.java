@@ -21,7 +21,7 @@ public class ListaPersonas implements Serializable{
 
 	public static final int CAPACIDAD = 10;
 	
-	private Persona[] array_personas;
+	private Persona[] array_personas = new Persona[CAPACIDAD];
 	
 	private int contPersonas = 0;
 	
@@ -97,10 +97,6 @@ public class ListaPersonas implements Serializable{
 				
 		//}
 			
-		
-		
-		
-		
 		return personaBuscada;
 	}
 	
@@ -375,7 +371,8 @@ public class ListaPersonas implements Serializable{
 	public boolean estaLlena()
 	{
 		boolean llena = false;
-		if (array_personas !=null)
+		if (array_personas.length<CAPACIDAD)
+		//if (array_personas !=null)
 		{
 			if (this.contPersonas == CAPACIDAD)
 			{

@@ -1,7 +1,12 @@
-package val.examples.jdbc;
+package basesdedatos.refactorizar;
 
-public class Empleados {
-	
+/**
+ * Clase EmpleadoDTO (Data Type Object) para crear el objeto de la Clase EmpleadoDTO
+ * 	que seria el objeto en memoria cogido de la base de datos.
+ * @author Diego Santamaría
+ *
+ */
+public class EmpleadoDTO {
 	private int EMPLOYEE_ID;
 	private String FIRST_NAME;
 	private String LAST_NAME;
@@ -45,7 +50,7 @@ public class Empleados {
 	 * @param managerID
 	 * @param departamentoId
 	 */
-	public Empleados (int idEmpleado, String nombre, String apellido, String email, String telefono,
+	public EmpleadoDTO (int idEmpleado, String nombre, String apellido, String email, String telefono,
 			String fechaContrato, String jobId, int salario, int comision, int managerID, int departamentoId)
 	
 	{
@@ -237,6 +242,4 @@ public class Empleados {
 	public void setDEPARTMENT_ID(int dEPARTMENT_ID) {
 		DEPARTMENT_ID = dEPARTMENT_ID;
 	}
-		
-
 }

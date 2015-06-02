@@ -2,23 +2,31 @@ package val.examples.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BaseDatos {
 	
 	
 	public static void main(String[] args) throws Exception {
 		
-		
+		Savepoint sp = null;
 		Connection conn = null;
 		ResultSet rset = null;
 		Statement stmt = null;
+		PreparedStatement prstmt = null;
 		Empleados empleado = null;
-		List <Empleados> listaEmpleados = new ArrayList <Empleados>();
-		final int SALARIO_A_FILTRAR = 3000; 
+		//MiArrayList listaEmpleados = null;
+		List <Empleados> listaEmpleados = new MiArrayList();
+		//final int SALARIO_A_FILTRAR = 3000; 
+		int filtroSalario =0;
+		String campoOrdenar = "";
+		Scanner sc = new Scanner (System.in);
 		
 		
 		try
@@ -28,7 +36,13 @@ public class BaseDatos {
 			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());// método equivalente al anterior
 			//Sea como sea, es, <<oye, si te piden una conexión, se la pides a esa clase!>>
 			conn = DriverManager.getConnection ("jdbc:oracle:thin:@localhost:1521:xe", "HR", "DIESAN666");
-  	        stmt = conn.createStatement();
+			
+			// para poner el autocomit de la base de datos para trabajar con copia y poder gestionar los fallos de conexion
+			conn.setAutoCommit(false); 
+  	        sp = conn.setSavepoint();
+			
+			
+			stmt = conn.createStatement();
 			//rset = stmt.executeQuery("select BANNER from SYS.V_$VERSION");
 			/*while (rset.next())
 				{
@@ -39,7 +53,18 @@ public class BaseDatos {
 			
 			//elegir salario a filtrar en la base de datos
 			// hacer consulta
-			rset = stmt.executeQuery("SELECT * FROM EMPLOYEES WHERE SALARY > 3000");
+  	        
+  	        System.out.println("INTRODUCE EL VALOR DEL SALARIO MÍNIMO A MOSTRAR");
+  	        filtroSalario = sc.nextInt();
+  	        System.out.println("INTRODUCE EL CAMPO DE ORDEN: ");
+  	        campoOrdenar = sc.next();
+  	        
+			prstmt = conn.prepareStatement("SELECT * FROM EMPLOYEES WHERE SALARY > ? ORDER BY ?");
+			prstmt.setInt(1, filtroSalario);
+			prstmt.setString(2, campoOrdenar);
+			rset = prstmt.executeQuery();
+			
+			conn.commit();
 			
 			while (rset.next())
 			{
@@ -61,8 +86,9 @@ public class BaseDatos {
 				listaEmpleados.add(empleado);
 			}
 			
-			System.out.println(empleado.getFIRST_NAME());
-			System.out.println(listaEmpleados);
+			
+			
+			System.out.println(listaEmpleados.toString());
 			
 			// añadir Empleados al ArrayList de empleados
 			
@@ -70,6 +96,7 @@ public class BaseDatos {
 		}
 		catch(Exception e)
 		{
+			conn.rollback(sp);
 			e.printStackTrace();
 		}
 		
