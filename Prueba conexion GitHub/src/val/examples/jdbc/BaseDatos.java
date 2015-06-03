@@ -15,7 +15,7 @@ public class BaseDatos {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Savepoint sp = null;
+		Savepoint sp = null; // variable para guardar el punto de salvaguarda.
 		Connection conn = null;
 		ResultSet rset = null;
 		Statement stmt = null;
@@ -39,7 +39,10 @@ public class BaseDatos {
 			
 			// para poner el autocomit de la base de datos para trabajar con copia y poder gestionar los fallos de conexion
 			conn.setAutoCommit(false); 
-  	        sp = conn.setSavepoint();
+  	        
+			
+			sp = conn.setSavepoint();// aqui pongo (creo) el punto de salvaguarda de la transaccion
+									//
 			
 			
 			stmt = conn.createStatement();
@@ -64,7 +67,9 @@ public class BaseDatos {
 			prstmt.setString(2, campoOrdenar);
 			rset = prstmt.executeQuery();
 			
-			conn.commit();
+			conn.commit(); // confirmo que la transacción ha sido corecta y hago commit,
+						// es decir ejecuto las instrucciones realizadas en la transacción
+						// en la base de datos.
 			
 			while (rset.next())
 			{
@@ -96,7 +101,8 @@ public class BaseDatos {
 		}
 		catch(Exception e)
 		{
-			conn.rollback(sp);
+			conn.rollback(sp); //en caso de fallar deshace lo hecho con conn (la conexion)
+								// hasta el punto de salvaguarda llamado sp.
 			e.printStackTrace();
 		}
 		

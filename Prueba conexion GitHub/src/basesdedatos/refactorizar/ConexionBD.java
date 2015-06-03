@@ -16,6 +16,10 @@ public class ConexionBD {
 	private final String TEXT_CONECTAR_BASE_DATOS = "jdbc:oracle:thin:@localhost:1521:xe";
 	private final String TEXT_USUARIO = "HR";
 	private final String TEXT_PASS = "DIESAN666";
+	
+	//creamos un atributo que es la creacion del único objeto de la clase
+	// desde aqui si podemos crear un objeto con el constructor private porque estamos en
+	// la misma clase  PATRON SINGLETON
 	private static ConexionBD miConexion = new ConexionBD();
 	
 	
@@ -24,6 +28,9 @@ public class ConexionBD {
 	Statement stmt = null;
 	PreparedStatement prstmt = null;
 	
+	/**
+	 * Constructor privado para que solo haya una sola instancia u objeto de la clase
+	 */
 	private ConexionBD()
 	{
 		
@@ -40,9 +47,10 @@ public class ConexionBD {
 			InstruccionesSQL instruccion = new InstruccionesSQL ();
 			//registro el driver, en realidad, hago que se ejecuten unas pocas líneas de la clase OracleDriver
 			try {
-				Class.forName(TEXT_DRIVER);
+				Class.forName(TEXT_DRIVER);//ejecuta el bloque static de la clase. Que contiene
+								//DriverManager.registerDriver (System.out.println(listaEmpleados.toString())
 			
-			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());// método equivalente al anterior
+			//DriverManager.registerDriver (System.out.println(listaEmpleados.toString());;// método equivalente al anterior
 			//Sea como sea, es, <<oye, si te piden una conexión, se la pides a esa clase!>>
 			conn = DriverManager.getConnection (TEXT_CONECTAR_BASE_DATOS, TEXT_USUARIO, TEXT_PASS);
   	        stmt = conn.createStatement();

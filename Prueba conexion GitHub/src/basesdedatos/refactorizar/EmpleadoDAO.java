@@ -56,9 +56,9 @@ public class EmpleadoDAO {
 			listaE.add(empleadoDTO);
 		}
 		
-		ejecutarInstruccionSQL();
-		crearEmpleadoDTO();
-		crearListaEmpleado();
+		//ejecutarInstruccionSQL();
+		//crearEmpleadoDTO();
+		//crearListaEmpleado();
 		
 		
 		
@@ -68,21 +68,21 @@ public class EmpleadoDAO {
 		
 	}
 
-	private static void crearListaEmpleado() {
+	//private static void crearListaEmpleado() {
 		// TODO Auto-generated method stub
 		
-	}
+	//}
 
-	private static void ejecutarInstruccionSQL() {
+	//private static void ejecutarInstruccionSQL() {
 		// TODO Auto-generated method stub
 		
 		//prstmt = conn.prepareStatement(InstruccionesSQL.CONSULTA_EMPLEADO1);
-	}
+	//}
 
-	private static void crearEmpleadoDTO() {
+	//private static void crearEmpleadoDTO() {
 		// TODO Auto-generated method stub
 		
-	}
+	//}
 	
 	
 }
