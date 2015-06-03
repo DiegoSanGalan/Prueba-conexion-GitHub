@@ -34,8 +34,9 @@ public class ConexionBD {
 		return miConexion;
 	}
 	
-	public void obtenerConexion() throws Exception
+	public ResultSet obtenerConexion() throws Exception
 	{
+			
 			InstruccionesSQL instruccion = new InstruccionesSQL ();
 			//registro el driver, en realidad, hago que se ejecuten unas pocas líneas de la clase OracleDriver
 			try {
@@ -50,9 +51,10 @@ public class ConexionBD {
 				e.printStackTrace();
 			}
 			prstmt = conn.prepareStatement(instruccion.CONSULTA_EMPLEADO1);
+			rset = prstmt.executeQuery();
 			
 			
-		
+			return rset;
 	}
 	
 	public void liberarRecursos()
