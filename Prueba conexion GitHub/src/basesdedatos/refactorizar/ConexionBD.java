@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import val.examples.threads.Taquilla;
+//import val.examples.threads.Taquilla;
 
 public class ConexionBD {
 
@@ -29,7 +29,7 @@ public class ConexionBD {
 	PreparedStatement prstmt = null;
 	
 	/**
-	 * Constructor privado para que solo haya una sola instancia u objeto de la clase
+	 * Constructor privado para que solo haya una sola instancia u objeto de la clase SINGLETON
 	 */
 	private ConexionBD()
 	{
@@ -41,10 +41,16 @@ public class ConexionBD {
 		return miConexion;
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public ResultSet obtenerConexion() throws Exception
 	{
 			
-			InstruccionesSQL instruccion = new InstruccionesSQL ();
+			//InstruccionesSQL instruccion = new InstruccionesSQL ();
 			//registro el driver, en realidad, hago que se ejecuten unas pocas líneas de la clase OracleDriver
 			try {
 				Class.forName(TEXT_DRIVER);//ejecuta el bloque static de la clase. Que contiene
@@ -58,7 +64,7 @@ public class ConexionBD {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			prstmt = conn.prepareStatement(instruccion.CONSULTA_EMPLEADO1);
+			prstmt = conn.prepareStatement(InstruccionesSQL.CONSULTA_EMPLEADO1);
 			rset = prstmt.executeQuery();
 			
 			
