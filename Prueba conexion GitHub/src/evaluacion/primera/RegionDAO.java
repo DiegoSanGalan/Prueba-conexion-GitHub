@@ -17,7 +17,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	private static Connection con  = null;
 	//private PreparedStatement prst = null;	
 	//private ResultSet rset = null;
-	//private ArrayList <RegionDTO> listaDev = new MiArrayList ();
+	private ArrayList <RegionDTO> listaDev = new MiArrayList ();
 	//private RegionDTO objetoRegDTO = null;
 
 	/**
@@ -27,7 +27,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	 */
 	public RegionDAO ()
 	{
-		conectar();
+		
 	}
 	
 
@@ -38,13 +38,17 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	
 	private void conectar ()
 	{
+		if (con == null)
+		{
 		try {
 			con =  ConexionDB.obtenerConexion();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		} else {
+			System.out.println("conexión ya existe");
+		}
 	}
 	
 	/**
@@ -58,13 +62,14 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	
 	/**
 	 * Método para crear un registro nuevo en la Base de Datos
-	 * @param c Tipo Generico
+	 * @param c Tipo RegionDTO
 	 * @return booleano indicando true si se creó correctamente
 	 */
 	@Override
 	public boolean crear(RegionDTO c) {
 		boolean creado = false;
 		PreparedStatement ps = null;
+		conectar();
 		try {
 			ps = con.prepareStatement(InstruccionesSQL.SQL_INSERTAR_NUEVO_REGISTRO);
 			ps.setString(1, c.getREGION_NAME());
@@ -83,14 +88,15 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 
 	/**
 	 * Método para eliminar un registro de la Base de Datos
-	 * @param claveId Tipo Generico
+	 * @param claveId Tipo Object
 	 * @return booleano indicando true si borró correctamente
 	 */
 	@Override
 	public boolean borrar(Object claveId) {
 		boolean borrado = false;
 		PreparedStatement ps = null;
-		Savepoint seguro =null; // para gestionar el punto de salvado Base de Datos
+		conectar();
+		//Savepoint seguro =null; // para gestionar el punto de salvado Base de Datos
 		
 		try {
 			ps = con.prepareStatement(InstruccionesSQL.SQL_BORRAR);
@@ -103,7 +109,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		} catch (SQLException e) {
 			borrado = false;
 			try {
-				con.rollback(seguro);
+				con.rollback();
 			} catch (SQLException e1) {
 				
 				e1.printStackTrace();
@@ -119,13 +125,14 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 
 	/**
 	 * Método para actualizar en la base de datos
-	 * @param c Tipo Object
+	 * @param c Tipo RegionDTO
 	 * @return booleano indicando true si se actualizó correctamente
 	 */
 	@Override
 	public boolean actualizar(RegionDTO c) {
 		boolean actualizado = false;
 		PreparedStatement ps = null;
+		conectar();
 		//Savepoint seguro =null; // para gestionar el punto de salvado Base de Datos
 		
 		
@@ -159,13 +166,14 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	/**
 	 * Método para leer por ID
 	 * @param claveId tipo Object
-	 * @return tipo Generico
+	 * @return tipo RegionDTO
 	 */
 	@Override
 	public RegionDTO leer(Object claveId) {
 		RegionDTO regDTO = null;
 		PreparedStatement ps = null;
 		ResultSet res = null;
+		conectar();
 		
 		try {
 			ps = con.prepareStatement(InstruccionesSQL.SQL_RECUPERAR_POR_ID);
@@ -203,6 +211,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		PreparedStatement ps = null;
 		ResultSet res = null;
 		ArrayList<RegionDTO> listaRegDTO = new MiArrayList();
+		conectar();
 		try {
 			ps = con.prepareStatement(InstruccionesSQL.SQL_RECUPERAR_TODOS);
 			res = ps.executeQuery();
@@ -215,7 +224,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 			con.commit();
 		} catch (SQLException e) {
 			try {
-				con.rollback();
+				con.rollback(); // en caso de fallo SQL vuelve al inicio de la conexion
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

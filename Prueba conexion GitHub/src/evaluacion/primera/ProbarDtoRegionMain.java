@@ -42,26 +42,57 @@ public class ProbarDtoRegionMain {
 			break;
 		case 1: // OPCION 1 INSERTAR REGION
 			System.out.println("OPCION 1 INSERTAR REGIÓN");
+			regionDAO = new RegionDAO();
 			int contID = 5;
 			regionDTO = new RegionDTO (contID,"GITANIA");
+			if (regionDAO.crear(regionDTO) == true)
+				{
+				System.out.println("*****************************************");
+				System.out.println("*****************************************");
+				System.out.println("Insertado Correcto");
+				System.out.println("*****************************************");
+				System.out.println("*****************************************");
+				}
 			
 			break;
 		case 2: // OPCION 2 BORRAR REGION
 			System.out.println("OPCION 2 BORRAR REGIÓN");
+			regionDAO = new RegionDAO();
+			Integer idReg = 1;
+			if (regionDAO.borrar(idReg)== true)
+			{
+				System.out.println("*****************************************");
+				System.out.println("*****************************************");
+				System.out.println("Borrado registro correcto");
+				System.out.println("*****************************************");
+				System.out.println("*****************************************");
+			}
 			break;
 		case 3:  // OPCION 3 CONSULTA POR ID_REGION 
 			System.out.println("OPCION 3 CONSULTA POR ID_REGION");
-			Integer idReg = 1;
-			regionDTO = regionDAO.leer(idReg);
+			regionDAO = new RegionDAO();
+			Integer idReg2 = 1;
+			regionDTO = regionDAO.leer(idReg2);
+			System.out.println("*****************************************");
+			System.out.println("*****************************************");
+			System.out.println(regionDTO.getREGION_NAME());
+			System.out.println("*****************************************");
+			System.out.println("*****************************************");
 			break;
 		case 4:  // OPCION 4 LISTAR TODOS LOS REGISTROS 
 			System.out.println("OPCION 4 RECUPERAR TODOS LOS REGISTROS");
+			regionDAO = new RegionDAO();
 			listadoTotal = regionDAO.leerTodos();
+			System.out.println("*****************************************");
+			System.out.println("*****************************************");
 			System.out.println(listadoTotal.toString());
+			System.out.println("*****************************************");
+			System.out.println("*****************************************");
 			break;
 		default: System.out.println("OPCION NO VÁLIDA");
 		    break;
 				}
+		
 		}while (opcionMenu!=0);
 		sc.close();
 	}

@@ -13,7 +13,7 @@ public interface InterfaceDAO <Generico>{
 	// Voy a utilizar generic para poder hacerlo funcionar con cualquier base de datos
 	/**
 	 * Método para crear un registro nuevo en la Base de Datos
-	 * @param c Tipo Generico
+	 * @param c Tipo ObjetoDTO
 	 * @return booleano indicando true si se creó correctamente
 	 */
 	public boolean crear(Generico c);
@@ -21,15 +21,16 @@ public interface InterfaceDAO <Generico>{
 	// utilizo tipo Object para que nos sirva con cualquiera
 	/**
 	 * Método para eliminar un registro de la Base de Datos
-	 * @param claveId Tipo Generico
+	 * @param claveId Tipo Object
 	 * @return booleano indicando true si borró correctamente
 	 * @throws SQLException 
 	 */
 	public boolean borrar(Object claveId);
 	
+	
 	/**
 	 * Método para actualizar en la base de datos
-	 * @param c Tipo Object
+	 * @param c Tipo ObjetoDTO
 	 * @return booleano indicando true si se actualizó correctamente
 	 */
 	public boolean actualizar(Generico c);
@@ -38,7 +39,7 @@ public interface InterfaceDAO <Generico>{
 	/**
 	 * Método para leer por ID
 	 * @param claveId tipo Object
-	 * @return tipo Generico
+	 * @return tipo ObjetoDTO
 	 */
 	public Generico leer(Object claveId);
 	

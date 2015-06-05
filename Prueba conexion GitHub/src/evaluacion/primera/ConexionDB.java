@@ -30,7 +30,7 @@ public class ConexionDB  {
 	// ***********************************************
 	//********* PARÁMETROS DE LA CONEXION *************	
 	//*************************************************	
-		
+		private static Connection c = null;
 		
 		
 	
@@ -59,7 +59,7 @@ public class ConexionDB  {
 	 * @throws SQLException 
 	 */
 	private Connection conectarBD() throws SQLException {
-		Connection c = null;
+		
 		//registro el driver, en realidad, hago que se ejecuten unas pocas líneas de la clase OracleDriver
 		try {
 			Class.forName(TEXT_DRIVER);//ejecuta el bloque static de la clase. Que contiene
@@ -86,7 +86,7 @@ public class ConexionDB  {
 	 */
 	public  static void liberarRecursos()
 	{
-		if (conn != null) 	{ try { ((Connection) conn).close(); } catch (Exception e3) { e3.printStackTrace(); }}
+		if (c != null) 	{ try {  c.close(); } catch (Exception e3) { e3.printStackTrace(); }}
 	}
 
 }
