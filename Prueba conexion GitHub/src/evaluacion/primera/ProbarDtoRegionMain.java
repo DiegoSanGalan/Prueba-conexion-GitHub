@@ -8,6 +8,7 @@ public class ProbarDtoRegionMain {
 	
 	public static ArrayList<RegionDTO> listadoTotal = new MiArrayList();
 	public static RegionDAO regionDAO = null;
+	public static RegionDTO regionDTO =null;
 
 	/**
 	 * Clase creada para probar el funcionamiento de las clases DAO y DTO
