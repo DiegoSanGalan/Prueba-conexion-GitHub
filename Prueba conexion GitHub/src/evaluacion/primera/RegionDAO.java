@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 
 /**
@@ -13,92 +14,37 @@ import java.util.ArrayList;
  */
 public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	
-	private ConexionDB con  = null;
-	private PreparedStatement prst = null;	
-	private ResultSet rset = null;
-	private ArrayList <RegionDTO> listaDev = new MiArrayList ();
-	private RegionDTO objetoRegDTO = null;
+	private static Connection con  = null;
+	//private PreparedStatement prst = null;	
+	//private ResultSet rset = null;
+	//private ArrayList <RegionDTO> listaDev = new MiArrayList ();
+	//private RegionDTO objetoRegDTO = null;
 
 	/**
+	 * Constructor de la Clase RegionDAO
+	 * Aquí activo la conexion al crear el objeto
 	 * Constructor de la clase
 	 */
 	public RegionDAO ()
 	{
-		
-	}
-	
-	
-	/**
-	 * Método para devolver un registro en forma de ArrayList buscado por id
-	 * @param idBuscar
-	 * @return MiArrayList
-	 * @throws SQLException
-	 */
-	public MiArrayList recuperarDatos (int idBuscar) throws SQLException
-	{
-		//String saberDato = "";
-		//saberDato = opcion.toString();
-		//System.out.println(saberDato);
-		
 		conectar();
-		rset = ejecutarSQL(idBuscar);
-		desconectar();
-		
-		listaDev = crearLista (rset);
-		
-		return (MiArrayList) listaDev;
 	}
 	
-	/**
-	 * Método para devolver un ArrayList con todos los registros de la Base de Datos
-	 * @return MiArrayList
-	 * @throws SQLException
-	 */
-	public MiArrayList recuperarDatos () throws SQLException
-	{
-		conectar();
-		rset = ejecutarSQL();
-		desconectar();
-		
-		listaDev = crearLista (rset);
-		
-		return (MiArrayList) listaDev;
-	}
-	
-	/**
-	 * Método para crear un ArrayList de Objetos leidos de la BD y lo devuelve
-	 * @param rset2 Tipo ResultSet
-	 * @return ArrayList 
-	 * @throws SQLException
-	 */
-	private ArrayList<RegionDTO> crearLista(ResultSet rset2) throws SQLException {
-		// TODO Auto-generated method stub
-		ArrayList <RegionDTO> listaVar = new MiArrayList();
-		while (rset2.next())
-		{
-			int idReg = rset.getInt(1);
-			String RegName= rset.getString(2);
-			
-			objetoRegDTO = new RegionDTO(idReg, RegName);
-			listaDev.add(objetoRegDTO);
-		}
-		
-		
-		return listaDev;
-	}
-
 
 	// **************************************************************
 	// ************** Conectar a la base de datos *******************
 	// **************************************************************
 	
-	/**
-	 * Método para crear la conexion a la base de datos
-	 * 
-	 */
+	
 	private void conectar ()
 	{
-		con = (ConexionDB) ConexionDB.obtenerConexion();
+		try {
+			con =  ConexionDB.obtenerConexion();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -109,12 +55,18 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		ConexionDB.liberarRecursos();
 	}
 	
+	
+	/**
+	 * Método para crear un registro nuevo en la Base de Datos
+	 * @param c Tipo Generico
+	 * @return booleano indicando true si se creó correctamente
+	 */
 	@Override
 	public boolean crear(RegionDTO c) {
 		boolean creado = false;
 		PreparedStatement ps = null;
 		try {
-			ps = con.obtenerConexion().prepareStatement(InstruccionesSQL.SQL_INSERTAR_NUEVO_REGISTRO);
+			ps = con.prepareStatement(InstruccionesSQL.SQL_INSERTAR_NUEVO_REGISTRO);
 			ps.setString(1, c.getREGION_NAME());
 			if (ps.executeUpdate()>0)
 			{
@@ -129,21 +81,33 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		return creado;
 	}
 
-
+	/**
+	 * Método para eliminar un registro de la Base de Datos
+	 * @param claveId Tipo Generico
+	 * @return booleano indicando true si borró correctamente
+	 */
 	@Override
 	public boolean borrar(Object claveId) {
 		boolean borrado = false;
 		PreparedStatement ps = null;
+		Savepoint seguro =null; // para gestionar el punto de salvado Base de Datos
 		
 		try {
-			ps = con.obtenerConexion().prepareStatement(InstruccionesSQL.SQL_BORRAR);
+			ps = con.prepareStatement(InstruccionesSQL.SQL_BORRAR);
 			ps.setString(1, claveId.toString());
 			if (ps.executeUpdate()>0)
 			{
 				borrado = true;
 			}
+			con.commit();
 		} catch (SQLException e) {
 			borrado = false;
+			try {
+				con.rollback(seguro);
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		finally
@@ -153,22 +117,35 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		return borrado;
 	}
 
-
+	/**
+	 * Método para actualizar en la base de datos
+	 * @param c Tipo Object
+	 * @return booleano indicando true si se actualizó correctamente
+	 */
 	@Override
 	public boolean actualizar(RegionDTO c) {
 		boolean actualizado = false;
 		PreparedStatement ps = null;
+		//Savepoint seguro =null; // para gestionar el punto de salvado Base de Datos
+		
+		
 		
 		try {
-			ps = con.obtenerConexion().prepareStatement(InstruccionesSQL.SQL_ACTUALIZAR);
+			ps = con.prepareStatement(InstruccionesSQL.SQL_ACTUALIZAR);
 			ps.setString(1, c.getREGION_NAME());
 			ps.setInt(2, c.getREGION_ID());
 			if (ps.executeUpdate() > 0)
 			{
 				actualizado = true;
 			}
+			con.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		finally
@@ -179,7 +156,11 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		return actualizado;
 	}
 
-
+	/**
+	 * Método para leer por ID
+	 * @param claveId tipo Object
+	 * @return tipo Generico
+	 */
 	@Override
 	public RegionDTO leer(Object claveId) {
 		RegionDTO regDTO = null;
@@ -187,7 +168,7 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 		ResultSet res = null;
 		
 		try {
-			ps = con.obtenerConexion().prepareStatement(InstruccionesSQL.SQL_RECUPERAR_POR_ID);
+			ps = con.prepareStatement(InstruccionesSQL.SQL_RECUPERAR_POR_ID);
 			ps.setString(1, claveId.toString());
 			res = ps.executeQuery();
 		
@@ -196,28 +177,34 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 			{
 				regDTO = new RegionDTO (res.getInt(1), res.getString(2));
 			}
+			con.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		finally 
 		{
 			desconectar();
 		}
-		
-		
 		return regDTO;
 	}
 
-
+	/**
+	 * Método para recuperar todos los registros de la Base de Datos
+	 * @return ArrayList
+	 */
 	@Override
 	public ArrayList<RegionDTO> leerTodos() {
-		RegionDTO regDTO = null;
 		PreparedStatement ps = null;
 		ResultSet res = null;
 		ArrayList<RegionDTO> listaRegDTO = new MiArrayList();
 		try {
-			ps = con.obtenerConexion().prepareStatement(InstruccionesSQL.SQL_RECUPERAR_TODOS);
+			ps = con.prepareStatement(InstruccionesSQL.SQL_RECUPERAR_TODOS);
 			res = ps.executeQuery();
 			
 			// lleno el ArrayList con los datos del ResultSet
@@ -225,8 +212,14 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 			{
 				listaRegDTO.add (new RegionDTO (res.getInt(1), res.getString(2)));
 			}
+			con.commit();
 		} catch (SQLException e) {
-		
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		finally
@@ -297,7 +290,64 @@ public class RegionDAO implements InterfaceDAO<RegionDTO> {
 	// *FINAL DE *********** Ejecutar la instruccionSQL dependiendo del parámetro recibido ***********************
 	// ***********************************************************************************************************
 	
+	///**
+//	 * Método para devolver un registro en forma de ArrayList buscado por id
+//	 * @param idBuscar
+//	 * @return MiArrayList
+//	 * @throws SQLException
+//	 */
+	//public MiArrayList recuperarDatos (int idBuscar) throws SQLException
+	//{
+		//String saberDato = "";
+		//saberDato = opcion.toString();
+		//System.out.println(saberDato);
+		
+	//	conectar();
+	//	rset = ejecutarSQL(idBuscar);
+	//	desconectar();
+		
+	//	listaDev = crearLista (rset);
+		
+	//	return (MiArrayList) listaDev;
+	//}
 	
+	///**
+	// * Método para devolver un ArrayList con todos los registros de la Base de Datos
+	// * @return MiArrayList
+	// * @throws SQLException
+	// */
+	//public MiArrayList recuperarDatos () throws SQLException
+	//{
+//		conectar();
+	//	rset = ejecutarSQL();
+	//	desconectar();
+		
+	//	listaDev = crearLista (rset);
+		
+	//	return (MiArrayList) listaDev;
+	//}
+	
+	///**
+	// * Método para crear un ArrayList de Objetos leidos de la BD y lo devuelve
+	// * @param rset2 Tipo ResultSet
+	// * @return ArrayList 
+	// * @throws SQLException
+	// */
+	//private ArrayList<RegionDTO> crearLista(ResultSet rset2) throws SQLException {
+		// TODO Auto-generated method stub
+		//ArrayList <RegionDTO> listaVar = new MiArrayList();
+		//while (rset2.next())
+	//	{
+	//		int idReg = rset.getInt(1);
+	//		String RegName= rset.getString(2);
+			
+	//		objetoRegDTO = new RegionDTO(idReg, RegName);
+	//		listaDev.add(objetoRegDTO);
+	//	}
+		
+		
+	//	return listaDev;
+	//}
 	
 	
 
